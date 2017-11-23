@@ -1,3 +1,8 @@
+0.9.b2.el7 - November 23, 2017
+
+- Added extra configuration options for LVM Cinder
+  backend.
+
 0.9.b1.el7 - November 23, 2017
 
 - First beta for Centos7!

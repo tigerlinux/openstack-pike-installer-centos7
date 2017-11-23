@@ -169,6 +169,7 @@ then
 				crudini --set /etc/cinder/cinder.conf lvm-$cindernodehost volume_clear "zero"
 				crudini --set /etc/cinder/cinder.conf lvm-$cindernodehost volume_clear_size $cinderclearmb
 				crudini --set /etc/cinder/cinder.conf lvm-$cindernodehost volume_clear_ionice "-c3"
+				crudini --set /etc/cinder/cinder.conf lvm-$cindernodehost lvm_type default
 			;;
 			"none")
 				crudini --set /etc/cinder/cinder.conf DEFAULT volume_clear "none"

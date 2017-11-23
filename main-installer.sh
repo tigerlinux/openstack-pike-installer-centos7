@@ -5,7 +5,7 @@
 # E-Mail: TigerLinux@Gmail.com
 #
 # Main Installer Script
-# Version: 0.9.b1.el7 "Neofelis Nebulosa"
+# Version: 0.9.b2.el7 "Neofelis Nebulosa"
 # November 23, 2017
 #
 
@@ -72,10 +72,10 @@ case $1 in
 
 	echo ""
 	echo "OPENSTACK UNATTENDED INSTALLER"
-	echo "Flavor: OpenStack OCATA for Centos 7"
+	echo "Flavor: OpenStack PIKE for Centos 7"
 	echo "Made by: Reynaldo R. Martinez P."
 	echo "E-Mail: TigerLinux@Gmail.com"
-	echo "Version 0.9.b1.el7 \"Neofelis Nebulosa\" - November 23, 2017"
+	echo "Version 0.9.b2.el7 \"Neofelis Nebulosa\" - November 23, 2017"
 	echo ""
 	echo "I'll verify all requiremens"
 	echo "If any requirement is not met, I'll stop and inform what's missing"
