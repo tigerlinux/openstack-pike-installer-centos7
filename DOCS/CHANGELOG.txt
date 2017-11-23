@@ -1,0 +1,8 @@
+0.9.b1.el7 - November 23, 2017
+
+- First beta for Centos7!
+- All modules adapted to OpenStack Rel 16 "Pike".
+- All latest changes on our Ocata-based installer
+  adapted to this new Installer for PIKE.
+- Added extra notes regarding "EL-REPO" Kernel-ml
+  series 4.
