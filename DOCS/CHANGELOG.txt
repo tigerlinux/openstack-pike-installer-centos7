@@ -1,3 +1,8 @@
+0.9.b3.el7 - November 25, 2017
+
+- Added patch for "Nova requires QEMU version 2.1.0"
+  nova-compute error.
+
 0.9.b2.el7 - November 23, 2017
 
 - Added extra configuration options for LVM Cinder

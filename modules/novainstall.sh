@@ -410,6 +410,11 @@ then
 	echo ""
 else
 	crudini --set /etc/nova/nova.conf libvirt cpu_mode $libvirt_cpu_mode
+	# Erase packages that causes conflicts with nova
+	# Patch for solving "InternalError: Nova requires QEMU version 2.1.0 or greater" nova-compute error
+	yum -y erase qemu-system qemu-common qemu
+	systemctl restart libvirtd
+	systemctl status libvirtd
 fi
 
 sync

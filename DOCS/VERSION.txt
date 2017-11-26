@@ -1,5 +1,5 @@
 Installer Version:
 
-0.9.b2.el7 "Neofelis Nebulosa"
+0.9.b3.el7 "Neofelis Nebulosa"
 
 ONLY FOR OPENSTACK RELEASE 16 "PIKE"
