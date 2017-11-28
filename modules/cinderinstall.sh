@@ -178,19 +178,6 @@ then
 		esac
 	fi
 
-	#if [ $cinderconfigglusterfs == "yes" ]
-	#then
-	#	# crudini --set /etc/cinder/cinder.conf glusterfs-$cindernodehost volume_driver "cinder.volume.drivers.glusterfs.GlusterfsDriver"
-	#	# crudini --set /etc/cinder/cinder.conf glusterfs-$cindernodehost glusterfs_shares_config "/etc/cinder/glusterfs_shares"
-	#	# crudini --set /etc/cinder/cinder.conf glusterfs-$cindernodehost glusterfs_mount_point_base "/var/lib/cinder/glusterfs"
-	#	# crudini --set /etc/cinder/cinder.conf glusterfs-$cindernodehost nas_volume_prov_type thin
-	#	# crudini --set /etc/cinder/cinder.conf glusterfs-$cindernodehost glusterfs_disk_util df
-	#	# crudini --set /etc/cinder/cinder.conf glusterfs-$cindernodehost glusterfs_qcow2_volumes True
-	#	# crudini --set /etc/cinder/cinder.conf glusterfs-$cindernodehost volume_backend_name GLUSTERFS-$cindernodehost
-	#	# echo $glusterfsresource > /etc/cinder/glusterfs_shares
-	#	# chown cinder.cinder /etc/cinder/glusterfs_shares
-	#fi
-
 	if [ $cinderconfignfs == "yes" ]
 	then
 		crudini --set /etc/cinder/cinder.conf nfs-$cindernodehost volume_driver "cinder.volume.drivers.nfs.NfsDriver"
@@ -249,15 +236,6 @@ then
 		prenfs=""
 	fi
 
-	#if [ $cinderconfigglusterfs == "yes" ]
-	#then
-	#	# prevgluster="glusterfs-$cindernodehost"
-	#	# backend="$prevlvm$seplvm$prevnfs$sepnfs$prevgluster"
-	#	prevgluster=""
-	#else
-	#	prevgluster=""
-	#fi
-
 	crudini --set /etc/cinder/cinder.conf DEFAULT enabled_backends "$backend"
 fi
  
@@ -295,9 +273,12 @@ source $keystone_admin_rc_file
 domaindefaultid=`openstack domain show default -f value -c id`
 crudini --set /etc/cinder/cinder.conf keystone_authtoken project_domain_id $domaindefaultid
 crudini --set /etc/cinder/cinder.conf keystone_authtoken user_domain_id $domaindefaultid
-crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_name $cinderuser
-crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_password $cinderpass
-crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_auth_url "http://$keystonehost:5000/v2.0/"
+# crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_name $cinderuser
+# crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_password $cinderpass
+# crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_auth_url "http://$keystonehost:5000/v2.0/"
+crudini --del /etc/cinder/cinder.conf DEFAULT os_privileged_user_name
+crudini --del /etc/cinder/cinder.conf DEFAULT os_privileged_user_password
+crudini --del /etc/cinder/cinder.conf DEFAULT os_privileged_user_auth_url
 crudini --set /etc/cinder/cinder.conf DEFAULT nova_catalog_info "compute:nova:internalURL"
 crudini --set /etc/cinder/cinder.conf DEFAULT nova_catalog_admin_info "compute:nova:adminURL"
 crudini --set /etc/cinder/cinder.conf DEFAULT os_region_name $endpointsregion

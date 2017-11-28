@@ -1,3 +1,10 @@
+0.9.b4.el7 - November 27, 2017
+
+- Updated cinder catalog information on nova install
+  module.
+- Removed old deprecated options on cinder install
+  module.
+
 0.9.b3.el7 - November 25, 2017
 
 - Added patch for "Nova requires QEMU version 2.1.0"

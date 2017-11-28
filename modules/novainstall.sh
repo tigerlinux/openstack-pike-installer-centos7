@@ -202,7 +202,7 @@ crudini --set /etc/nova/nova.conf DEFAULT vif_plugging_is_fatal False
 crudini --set /etc/nova/nova.conf DEFAULT control_exchange nova
 crudini --set /etc/nova/nova.conf DEFAULT host `hostname`
 crudini --set /etc/nova/nova.conf cinder os_region_name $endpointsregion
-crudini --set /etc/nova/nova.conf cinder catalog_info volumev2:cinderv2:internalURL
+crudini --set /etc/nova/nova.conf cinder catalog_info volumev3:cinderv3:internalURL
 crudini --set /etc/nova/nova.conf DEFAULT use_neutron True
 crudini --set /etc/nova/nova.conf cache backend dogpile.cache.memcached
 crudini --set /etc/nova/nova.conf cache enabled True
