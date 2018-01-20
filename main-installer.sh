@@ -5,8 +5,8 @@
 # E-Mail: TigerLinux@Gmail.com
 #
 # Main Installer Script
-# Version: 0.9.b4.el7 "Neofelis Nebulosa"
-# November 27, 2017
+# Version: 1.0.0.el7 "Neofelis Nebulosa"
+# January 20, 2018
 #
 
 PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
@@ -34,7 +34,7 @@ PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 #     - Manila.
 #     - Designate.
 #     - Magnum.
-#     - Horizon.
+#     - Horizon (with grafana)
 # 7.- Basic SNMP Support.
 # 8.- Post-install with maintenance crontabs and scripts
 #
@@ -75,7 +75,7 @@ case $1 in
 	echo "Flavor: OpenStack PIKE for Centos 7"
 	echo "Made by: Reynaldo R. Martinez P."
 	echo "E-Mail: TigerLinux@Gmail.com"
-	echo "Version 0.9.b4.el7 \"Neofelis Nebulosa\" - November 27, 2017"
+	echo "Version 1.0.0.el7 \"Neofelis Nebulosa\" - January 20, 2018"
 	echo ""
 	echo "I'll verify all requiremens"
 	echo "If any requirement is not met, I'll stop and inform what's missing"

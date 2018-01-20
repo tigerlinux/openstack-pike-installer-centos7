@@ -160,6 +160,13 @@ echo ""
 echo "You can use the script /usr/local/bin/openstack-control.sh for administration tasks"
 echo "Your administrative userid is: $keystoneadminuser, password: $keystoneadminpass"
 echo "Use your web-based dashboard at: http://$horizonhost"
+if [ $grafanainstall == "yes" ]
+then
+	echo ""
+	echo "Your grafana dashboard is at: http://$horizonhost:3000"
+	echo "Grafana user: admin"
+	echo "Grafana password: $grafanapass"
+fi
 echo ""
 echo "Thanks you very much for using this automated tool"
 echo ""

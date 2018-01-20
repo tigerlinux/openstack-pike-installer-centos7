@@ -206,6 +206,11 @@ then
 	keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 fi
 
+if [ $grafanainstall == "yes" ]
+then
+	crudini --set /etc/keystone/keystone.conf cors allowed_origin $grafanaurl
+fi
+
 #
 # With the basic configuration done, and the "admin service token" exported to our environment,
 # we proceed to start Keystone in order to create all needed credentials

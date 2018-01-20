@@ -34,6 +34,16 @@ then
 	export keystoneclientnetwork=`ip route get 1 | awk '{print $NF;exit}'`
 fi
 
+if [ ! $svcendpointsnetwork ]
+then
+        export svcendpointsnetwork=`ip route get 1 | awk '{print $NF;exit}'`
+fi
+
+if [ ! $monitoringnetwork ]
+then
+        export monitoringnetwork="0.0.0.0/0"
+fi
+
 if [ ! $manilaclientnetwork ]
 then
 	export manilaclientnetwork="0.0.0.0/0"
@@ -129,18 +139,21 @@ if [ $swiftinstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 6000,6001,6002,873 -j ACCEPT
 	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 8080,11211 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 fi
 
 #Glance
 if [ $glanceinstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 9292 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 9292 -j ACCEPT
 fi
 
 #Cinder
 if [ $cinderinstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 3260,8776 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8776 -j ACCEPT
 fi
 
 #Neutron
@@ -148,6 +161,7 @@ if [ $neutroninstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -p udp -m state --state NEW -m udp --dport 4789 -j ACCEPT
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 9696 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 9696 -j ACCEPT
 fi
 
 #Nova
@@ -159,32 +173,41 @@ then
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 6082 -j ACCEPT
 	iptables -A INPUT -s $horizonclientnetwork -m state --state NEW -m tcp -p tcp --dport 6082 -j ACCEPT
 	iptables -A INPUT -s $nova_computehost -p tcp -m multiport --dports 5900:5999 -j ACCEPT
+	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 5900:5999 -j ACCEPT
 	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 8773,8774,8775,8778 -j ACCEPT
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 16509 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8774 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8778 -j ACCEPT
 fi
 
 #Ceilometer/aodh/gnocchi
 if [ $ceilometerinstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 8777,8041,8042 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8041 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8042 -j ACCEPT
 fi
 
 #Heat
 if [ $heatinstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 8000,8003,8004 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8000 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8004 -j ACCEPT
 fi
 
 #Trove
 if [ $troveinstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 8779 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8779 -j ACCEPT
 fi
 
 #Sahara
 if [ $saharainstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 8386 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8386 -j ACCEPT
 fi
 
 #Manila
@@ -193,6 +216,7 @@ then
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 8786 -j ACCEPT
 	iptables -A INPUT -s $osprivatenetwork -p tcp -m multiport --dports 111,2049,445,139 -j ACCEPT
 	iptables -A INPUT -s $manilaclientnetwork -p tcp -m multiport --dports 111,2049,445,139 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 8786 -j ACCEPT
 fi
 
 #Designate
@@ -202,12 +226,14 @@ then
 	iptables -A INPUT -s $osprivatenetwork -p udp -m multiport --dports 5354,53 -j ACCEPT
 	iptables -A INPUT -s $designateclientnetwork -p tcp -m multiport --dports 5354,53 -j ACCEPT
 	iptables -A INPUT -s $designateclientnetwork -p udp -m multiport --dports 5354,53 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 9001 -j ACCEPT
 fi
 
 #Magnum
 if [ $magnuminstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 9511 -j ACCEPT
+	iptables -A INPUT -s $svcendpointsnetwork -m state --state NEW -m tcp -p tcp --dport 9511 -j ACCEPT
 fi
 
 #Horizon
@@ -215,6 +241,11 @@ if [ $horizoninstall == "yes" ]
 then
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 11211 -j ACCEPT
 	iptables -A INPUT -s $horizonclientnetwork -p tcp -m multiport --dports 80,443 -j ACCEPT
+	# Grafana install - that is done inside horizon module.
+	if [ $grafanainstall == "yes" ]
+	then
+		iptables -A INPUT -s $horizonclientnetwork -m state --state NEW -m tcp -p tcp --dport 3000 -j ACCEPT
+	fi
 fi
 
 #Monitoring - both snmp and zabbix:
@@ -223,6 +254,9 @@ then
 	iptables -A INPUT -s $osprivatenetwork -p udp -m multiport --dports 161 -j ACCEPT
 	iptables -A INPUT -d $osprivatenetwork -p udp -m multiport --sports 161 -j ACCEPT
 	iptables -A INPUT -s $osprivatenetwork -m state --state NEW -m tcp -p tcp --dport 10050 -j ACCEPT
+        iptables -A INPUT -s $monitoringnetwork -p udp -m multiport --dports 161 -j ACCEPT
+        iptables -A INPUT -d $monitoringnetwork -p udp -m multiport --sports 161 -j ACCEPT
+        iptables -A INPUT -s $monitoringnetwork -m state --state NEW -m tcp -p tcp --dport 10050 -j ACCEPT
 fi
 
 # Block everything else:
@@ -241,5 +275,3 @@ then
 fi
 
 # END
-
-

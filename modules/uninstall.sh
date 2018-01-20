@@ -105,6 +105,7 @@ yum -y erase openstack-glance \
 yum -y erase openstack-puppet-modules openstack-packstack-puppet
 yum -y erase qpid-cpp-server qpid-cpp-server-ssl qpid-cpp-client cyrus-sasl cyrus-sasl-md5 cyrus-sasl-plain
 yum -y erase rabbitmq-server
+yum -y erase grafana*
 yum -y erase bind
 rm -rf /var/named
 yum -y erase strongswan strongswan-libipsec strongswan-charon-nm strongswan-tnc-imcvs
@@ -216,6 +217,9 @@ rm -fr /etc/glance \
 	/var/log/magnum \
 	/var/lib/magnum \
 	/etc/magnum \
+	/etc/grafana \
+	/var/log/grafana \
+	/var/lib/grafana \
 	/etc/httpd/conf.d/wsgi-aodh.conf \
 	/etc/httpd/conf.d/wsgi-ceilometer.conf \
 	/root/keystonerc_*

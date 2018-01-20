@@ -518,6 +518,11 @@ then
 	crudini --set /etc/gnocchi/gnocchi.conf indexer driver sqlalchemy
 	crudini --set /etc/gnocchi/gnocchi.conf archive_policy default_aggregation_methods "mean,min,max,sum,std,median,count,last,95pct"
 
+	if [ $grafanainstall == "yes" ]
+	then
+		crudini --set /etc/gnocchi/gnocchi.conf cors allowed_origin $grafanaurl
+	fi
+
 	# crudini --set /etc/gnocchi/api-paste.ini "pipeline:main" pipeline "gnocchi+auth"
 
 	# su gnocchi -s /bin/sh -c "gnocchi-upgrade --config-file /etc/gnocchi/gnocchi.conf --create-legacy-resource-types"

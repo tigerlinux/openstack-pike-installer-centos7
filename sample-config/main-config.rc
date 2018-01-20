@@ -5,8 +5,8 @@
 # E-Mail: TigerLinux@Gmail.com
 #
 # Main Configuration
-# Version: 0.9.b4.el7 "Neofelis Nebulosa"
-# November 27, 2017
+# Version: 1.0.0.el7 "Neofelis Nebulosa"
+# January 20, 2018
 #
 
 #
@@ -37,12 +37,23 @@ osprivatenetwork="192.168.56.60"
 #
 keystoneclientnetwork="192.168.56.60"
 #
+# Service endpoints already exposed to the IP's or Network configured on the "osprivatenetwork"
+# variable, but, you can expose all of them to an additional admin network, or even "0.0.0.0/0" if
+# wou want those endpoints reachable from all the world.
+#
+svcendpointsnetwork="192.168.56.60"
+#
+#
 # Manila and Designate are already exposed to any IP or Net included on the
 # "osprivatenetwork" variable. If you want to expose both Manila and Designate services 
 # to a specific/additional network, IP, or to all the world, set the following variables:
 #
 manilaclientnetwork="0.0.0.0/0"
 designateclientnetwork="0.0.0.0/0"
+#
+# If you want to monitor your OpenStack nodes, add your snmp/zabbix source monitoring network
+# snmp and zabbix-agent ports will be opened for the following net or ip
+monitoringnetwork="192.168.56.60"
 #
 # Finally, you normally want to expose Horizon to all your nets, but if you want to specicy
 # a single specific administrative network, set the variable to your desired source net:
@@ -1033,6 +1044,22 @@ extrahorizonhosts=""
 memcached_spec="memcached:\/\/127.0.0.1:11211\/"
 # Finally, the branding name. Set as your personal or corporate preference
 brandingname="OpenStack Private Cloud"
+#
+# If for any chance your setup is public (horizon exposed to the internet) change the following
+# variable to "yes". It will disable instance console from Horizon.
+disableconsole="no"
+#
+# If you want to include grafana (that will be enabled with gnocchi support as a "/grafana" webdir
+# under your horizon install with a proxypass configuration) set the following variable to "yes".
+grafanainstall="yes"
+#
+# If you install grafana, and plan to use it with gnocchi, ensure the following variable is the
+# actual base FQDN or IP of your horizon install, with the standard grafana port (3000):
+grafanaurl="http://192.168.56.60:3000"
+# NOTE: If you fail to setup correctly the "grafanaurl" variable, the "cors" configuration on both
+# keystone and gnocchi will fail.
+# Next is the password for the grafana "admin" user:
+grafanapass="0p3nSt4ck"
 
 #
 # END OF THE CONFIGURATION FILE
